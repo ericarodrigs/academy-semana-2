@@ -3,19 +3,26 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   //Defina essas propriedades para nossa classe 'Button'
 
-  final color;
-  final textColor;
+  final Color? color;
+  final Color textColor;
   final String buttonText;
-  final buttontapped;
+  final Function()? buttontapped;
 
   //Faça aqui um construtor para receber via parametro
   // e popular nossas propriedade
-  Button({ required this.color, required this.textColor, required this.buttonText, this.buttontapped});
+  const Button(
+      {Key? key,
+      required this.color,
+      required this.textColor,
+      required this.buttonText,
+      this.buttontapped})
+      : super(key: key);
+
   //Abaixo temos o comentario
   // indicando onde cada propriedade devera ir
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: buttontapped,
       child: Padding(
@@ -29,8 +36,7 @@ class Button extends StatelessWidget {
                 style: TextStyle(
                     color: textColor,
                     fontSize: 25,
-                    fontWeight: FontWeight.bold
-                ),
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),

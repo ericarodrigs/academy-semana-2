@@ -13,14 +13,14 @@ import 'package:math_expressions/math_expressions.dart';
 // lembrando que devemos executar estas operação como alteração de estado,
 // então é usado a chamada do nosso metodo "setState".
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
     );
   }
@@ -30,13 +30,16 @@ class MyApp extends StatelessWidget {
 // e a classe MyApp é a classe que faz o desenho da nossa tela principal.
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   //Nosso atributo "userInput" é um string que armazena o valor que está sendo digitado pelo usuário.
   String userInput = '';
+
   //Nosso atributo "answer" é um string que armazena o valor que está sendo mostrado na tela como resposta.
   String answer = '';
 
@@ -68,7 +71,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calculador'),
+        title: const Center(child: Text('Calculadora')),
       ),
       backgroundColor: Colors.white38,
       //Esta Column é onde começa o desenho da nossa calculadora,
@@ -76,26 +79,24 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           //Este Expanded é onde fica o display da nossa calculadora,
           Expanded(
-              //Este Container é onde fica o que é digitado pelo usuário,
-              child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   alignment: Alignment.centerRight,
                   child: Text(
                     userInput,
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: const TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
                 //Já este Container é onde fica o que é mostrado na tela como resposta,
                 Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   alignment: Alignment.centerRight,
                   child: Text(
                     answer,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 30,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
@@ -103,85 +104,84 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
-          )),
+          ),
           //Este Expanded é onde fica a lista de botões da calculadora,
           Expanded(
             flex: 3,
-            child: Container(
-              //Aqui utilizamos o GridView.builder para criar uma lista de widget botões,
-              child: GridView.builder(
-                //Aqui utilizamos o itemCount para definir o número de botões que serão criados,
-                itemCount: buttons.length,
-                //Aqui utilizamos o gridDelegate para definir o tamanho dos botões,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4),
-                //Aqui utilizamos o itemBuilder para criar os botões,
-                itemBuilder: (BuildContext context, int index) {
-                  //Clear Button
-                  if(buttons[index] == 'C'){
-                    return Button(
+            //Aqui utilizamos o GridView.builder para criar uma lista de widget botões,
+            child: GridView.builder(
+              //Aqui utilizamos o itemCount para definir o número de botões que serão criados,
+              itemCount: buttons.length,
+              //Aqui utilizamos o gridDelegate para definir o tamanho dos botões,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4),
+              //Aqui utilizamos o itemBuilder para criar os botões,
+              itemBuilder: (BuildContext context, int index) {
+                //Clear Button
+                if (buttons[index] == 'C') {
+                  return Button(
                     buttontapped: () {
                       setState(() {
                         clearAll();
-                    });
-                  },
-                  buttonText: buttons[index],
-                  color: Colors.grey[400],
-                  textColor: Colors.black,
+                      });
+                    },
+                    buttonText: buttons[index],
+                    color: Colors.grey[400],
+                    textColor: Colors.black,
                   );
                 }
-                  // //Delete Button
-                  if(buttons[index] == 'DEL'){
-                    return Button(
-                      buttontapped: () {
-                        setState(() {
-                          deleteLastDigit();
-                        });
-                      },
-                      buttonText: buttons[index],
+                // //Delete Button
+                if (buttons[index] == 'DEL') {
+                  return Button(
+                    buttontapped: () {
+                      setState(() {
+                        deleteLastDigit();
+                      });
+                    },
+                    buttonText: buttons[index],
+                    color: Colors.grey[400],
+                    textColor: Colors.black,
+                  );
+                }
+                //Equal_to Button
+                if (buttons[index] == '=') {
+                  //TODO tentar resolver bug do botao '='. Tá crashando quando userInput == 0.
+                  return Button(
+                    buttontapped: () {
+                      setState(() {
+                        equalPressed();
+                      });
+                    },
+                    buttonText: buttons[index],
+                    color: Colors.orange[500],
+                    textColor: Colors.white,
+                  );
+                }
+                //Especial buttons
+                if (buttons[index] == '+/-' || buttons[index] == '%') {
+                  return Button(
+                      buttontapped: () =>
+                          setState(() => userInput += buttons[index]),
                       color: Colors.grey[400],
                       textColor: Colors.black,
-                    );
-                  }
-                  //Equal_to Button
-                  if (buttons[index] == '=') {
-                    return Button(
-                      buttontapped: () {
-                        setState(() {
-                          equalPressed();
-                        });
-                      },
-                      buttonText: buttons[index],
-                      color: Colors.orange[500],
-                      textColor: Colors.white,
-                    );
-                  }
-                  //Especial buttons
-                  if (buttons[index] == '+/-' || buttons[index] == '%'){
-                    return Button(
-                        buttontapped: () =>
-                        setState(() => userInput += buttons[index]),
-                        color: Colors.grey[400],
-                        textColor: Colors.black,
-                        buttonText: buttons[index]);
-                  }
-                  //other buttons
-                  else {
-                    return Button(
-                        buttontapped: () =>
-                            setState(() => userInput += buttons[index]),
-                        color: isOperator(buttons[index])
-                            ? Colors.blue[300]
-                            : Colors.white,
-                        textColor: isOperator(buttons[index])
-                            ? Colors.white
-                            : Colors.black,
-                        buttonText: buttons[index]);
-                  }
-                },
-              ),
+                      buttonText: buttons[index]);
+                }
+                //other buttons
+                else {
+                  return Button(
+                      buttontapped: () =>
+                          setState(() => userInput += buttons[index]),
+                      color: isOperator(buttons[index])
+                          ? Colors.blue[300]
+                          : Colors.white,
+                      textColor: isOperator(buttons[index])
+                          ? Colors.white
+                          : Colors.black,
+                      buttonText: buttons[index]);
+                }
+              },
             ),
-          )
+          ),
         ],
       ),
     );
@@ -221,4 +221,3 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
-

@@ -118,13 +118,31 @@ class _HomePageState extends State<HomePage> {
                 //Aqui utilizamos o itemBuilder para criar os botões,
                 itemBuilder: (BuildContext context, int index) {
                   //Clear Button
-                  // if(buttons[index] == 'C'){
-                  //
-                  // }
+                  if(buttons[index] == 'C'){
+                    return Button(
+                    buttontapped: () {
+                      setState(() {
+                        clearAll();
+                    });
+                  },
+                  buttonText: buttons[index],
+                  color: Colors.grey[400],
+                  textColor: Colors.black,
+                  );
+                }
                   // //Delete Button
-                  // if(buttons[index] == 'DEL'){
-                  //
-                  // }
+                  if(buttons[index] == 'DEL'){
+                    return Button(
+                      buttontapped: () {
+                        setState(() {
+                          deleteLastDigit();
+                        });
+                      },
+                      buttonText: buttons[index],
+                      color: Colors.grey[400],
+                      textColor: Colors.black,
+                    );
+                  }
                   //Equal_to Button
                   if (buttons[index] == '=') {
                     return Button(
@@ -134,9 +152,18 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                       buttonText: buttons[index],
-                      color: Colors.orange[700],
+                      color: Colors.orange[500],
                       textColor: Colors.white,
                     );
+                  }
+                  //Especial buttons
+                  if (buttons[index] == '+/-' || buttons[index] == '%'){
+                    return Button(
+                        buttontapped: () =>
+                        setState(() => userInput += buttons[index]),
+                        color: Colors.grey[400],
+                        textColor: Colors.black,
+                        buttonText: buttons[index]);
                   }
                   //other buttons
                   else {
@@ -144,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                         buttontapped: () =>
                             setState(() => userInput += buttons[index]),
                         color: isOperator(buttons[index])
-                            ? Colors.blueAccent
+                            ? Colors.blue[300]
                             : Colors.white,
                         textColor: isOperator(buttons[index])
                             ? Colors.white
@@ -182,4 +209,16 @@ class _HomePageState extends State<HomePage> {
     //Aqui convertemos o resultado em String e atribuimos ao atributo "answer".
     answer = eval.toString();
   }
+
+  void clearAll() {
+    userInput = '';
+    answer = '';
+  }
+
+  void deleteLastDigit() {
+    if (userInput.isNotEmpty) {
+      userInput = userInput.substring(0, (userInput.length - 1));
+    }
+  }
 }
+

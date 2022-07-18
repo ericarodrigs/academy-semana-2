@@ -111,75 +111,80 @@ class _HomePageState extends State<HomePage> {
             //Aqui utilizamos o GridView.builder para criar uma lista de widget botões,
             child: GridView.builder(
               //Aqui utilizamos o itemCount para definir o número de botões que serão criados,
-              itemCount: buttons.length,
-              //Aqui utilizamos o gridDelegate para definir o tamanho dos botões,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4),
-              //Aqui utilizamos o itemBuilder para criar os botões,
-              itemBuilder: (BuildContext context, int index) {
-                //Clear Button
-                if (buttons[index] == 'C') {
-                  return Button(
-                    buttontapped: () {
-                      setState(() {
-                        clearAll();
-                      });
-                    },
-                    buttonText: buttons[index],
-                    color: Colors.grey[400],
-                    textColor: Colors.black,
-                  );
-                }
-                // //Delete Button
-                if (buttons[index] == 'DEL') {
-                  return Button(
-                    buttontapped: () {
-                      setState(() {
-                        deleteLastDigit();
-                      });
-                    },
-                    buttonText: buttons[index],
-                    color: Colors.grey[400],
-                    textColor: Colors.black,
-                  );
-                }
-                //Equal_to Button
-                if (buttons[index] == '=') {
-                  return Button(
-                    buttontapped: () {
-                      setState(() {
-                        equalPressed();
-                      });
-                    },
-                    buttonText: buttons[index],
-                    color: Colors.orange[500],
-                    textColor: Colors.white,
-                  );
-                }
-                //Especial buttons
-                if (buttons[index] == '+/-' || buttons[index] == '%') {
-                  return Button(
-                      buttontapped: () =>
-                          setState(() => userInput += buttons[index]),
+                itemCount: buttons.length,
+                //Aqui utilizamos o gridDelegate para definir o tamanho dos botões,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                //Aqui utilizamos o itemBuilder para criar os botões,
+                itemBuilder: (BuildContext context, int index) {
+
+                  switch (buttons[index]) {
+                    //Clear Button
+                  case ('C'):
+                    return Button(
+                      buttontapped: () {
+                        setState(() {
+                          clearAll();
+                        });
+                      },
+                      buttonText: buttons[index],
                       color: Colors.grey[400],
                       textColor: Colors.black,
-                      buttonText: buttons[index]);
-                }
-                //other buttons
-                else {
-                  return Button(
-                      buttontapped: () =>
-                          setState(() => userInput += buttons[index]),
-                      color: isOperator(buttons[index])
-                          ? Colors.blue[300]
-                          : Colors.white,
-                      textColor: isOperator(buttons[index])
-                          ? Colors.white
-                          : Colors.black,
-                      buttonText: buttons[index]);
-                }
-              },
-            ),
+                    );
+
+                   //Delete Button
+                  case ('DEL'):
+                    return Button(
+                      buttontapped: () {
+                        setState(() {
+                          deleteLastDigit();
+                        });
+                      },
+                      buttonText: buttons[index],
+                      color: Colors.grey[400],
+                      textColor: Colors.black,
+                    );
+
+                    //Equal_to Button
+                  case ('='):
+                    return Button(
+                      buttontapped: () {
+                        setState(() {
+                          equalPressed();
+                        });
+                      },
+                      buttonText: buttons[index],
+                      color: Colors.orange[500],
+                      textColor: Colors.white,
+                    );
+
+                  //Especial buttons
+                  case ('+/-'):
+                    return Button(
+                        color: Colors.grey[400],
+                        textColor: Colors.black,
+                        buttonText: buttons[index]);
+
+                  case ('%'):
+                    return Button(
+                        buttontapped: () => setState(() => userInput += buttons[index]),
+                        color: Colors.grey[400],
+                        textColor: Colors.black,
+                        buttonText: buttons[index]);
+
+                  //other buttons
+                  default :
+                    return Button(
+                        buttontapped: () =>
+                            setState(() => userInput += buttons[index]),
+                        color: isOperator(buttons[index])
+                            ? Colors.blue[300]
+                            : Colors.white,
+                        textColor: isOperator(buttons[index])
+                            ? Colors.white
+                            : Colors.black,
+                        buttonText: buttons[index]);
+                }}),
           ),
         ],
       ),

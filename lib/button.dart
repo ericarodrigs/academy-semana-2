@@ -26,16 +26,19 @@ class Button extends StatelessWidget {
     return GestureDetector(
       onTap: buttontapped,
       child: Padding(
-        padding: const EdgeInsets.all(0.2),
+        padding: const EdgeInsets.all(3),
         child: ClipRRect(
           child: Container(
-            color: color,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(24),
+            ),
             child: Center(
               child: Text(
                 buttonText,
                 style: TextStyle(
                     color: textColor,
-                    fontSize: 25,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold),
               ),
             ),

@@ -145,7 +145,6 @@ class _HomePageState extends State<HomePage> {
                 }
                 //Equal_to Button
                 if (buttons[index] == '=') {
-                  //TODO tentar resolver bug do botao '='. Tá crashando quando userInput == 0.
                   return Button(
                     buttontapped: () {
                       setState(() {
@@ -197,17 +196,19 @@ class _HomePageState extends State<HomePage> {
 
 //Método que converte a String do usuário em uma expressão matemática e calcula o resultado.
   void equalPressed() {
-    String finaluserinput = userInput;
-    finaluserinput = userInput.replaceAll('x', '*');
+    if (userInput.isNotEmpty) {
+      String finaluserinput = userInput;
+      finaluserinput = userInput.replaceAll('x', '*');
 
-    Parser p = Parser();
-    //Aqui utilizamos o parseExpression para converter a String do usuário em uma expressão matemática.
-    Expression exp = p.parse(finaluserinput);
-    ContextModel cm = ContextModel();
-    //Aqui utilizamos o evaluate para calcular o resultado da expressão matemática.
-    double eval = exp.evaluate(EvaluationType.REAL, cm);
-    //Aqui convertemos o resultado em String e atribuimos ao atributo "answer".
-    answer = eval.toString();
+      Parser p = Parser();
+      //Aqui utilizamos o parseExpression para converter a String do usuário em uma expressão matemática.
+      Expression exp = p.parse(finaluserinput);
+      ContextModel cm = ContextModel();
+      //Aqui utilizamos o evaluate para calcular o resultado da expressão matemática.
+      double eval = exp.evaluate(EvaluationType.REAL, cm);
+      //Aqui convertemos o resultado em String e atribuimos ao atributo "answer".
+      answer = eval.toString();
+    }
   }
 
   void clearAll() {

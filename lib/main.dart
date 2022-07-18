@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Center(child: Text('Calculadora')),
       ),
-      backgroundColor: Colors.white38,
+      backgroundColor: Colors.white24,
       //Esta Column é onde começa o desenho da nossa calculadora,
       body: Column(
         children: <Widget>[
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                       buttonText: buttons[index],
-                      color: Colors.grey[400],
+                      color: Colors.blueGrey[300],
                       textColor: Colors.black,
                     );
 
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                       buttonText: buttons[index],
-                      color: Colors.grey[400],
+                      color: Colors.blueGrey[300],
                       textColor: Colors.black,
                     );
 
@@ -154,21 +154,21 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                       buttonText: buttons[index],
-                      color: Colors.orange[500],
+                      color: Colors.amber[600],
                       textColor: Colors.white,
                     );
 
                   //Especial buttons
                   case ('+/-'):
                     return Button(
-                        color: Colors.grey[400],
+                        color: Colors.blueGrey[300],
                         textColor: Colors.black,
                         buttonText: buttons[index]);
 
                   case ('%'):
                     return Button(
                         buttontapped: () => setState(() => userInput += buttons[index]),
-                        color: Colors.grey[400],
+                        color: Colors.blueGrey[300],
                         textColor: Colors.black,
                         buttonText: buttons[index]);
 
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                         buttontapped: () =>
                             setState(() => userInput += buttons[index]),
                         color: isOperator(buttons[index])
-                            ? Colors.blue[300]
+                            ? Colors.blue[400]
                             : Colors.white,
                         textColor: isOperator(buttons[index])
                             ? Colors.white
